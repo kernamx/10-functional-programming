@@ -52,7 +52,7 @@ var app = app || {};
 // });
 
     Article.all = rawData.map(function(ele) {
-      return ele.properties.NEW;
+      return ele.Article.all;
     });
 
 
@@ -77,10 +77,14 @@ var app = app || {};
     }, 0)
   };
 
-  // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
+  // TODO(DONE): Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
   // probably need to use the optional accumulator argument in your reduce call.
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(function(authorName) {
+      return authorName.author;
+    }).reduce(function(names) {
+      return names;
+    });
   };
 
   Article.numWordsByAuthor = () => {
