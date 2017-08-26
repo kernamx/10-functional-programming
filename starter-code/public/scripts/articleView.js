@@ -137,9 +137,12 @@ articleView.initIndexPage = function() {
 };
 
 articleView.initAdminPage = function() {
-  // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
+  // TODO(DONE): Call the Handlebars `.compile` function, which will return a function for you to use where needed.
   // Make sure you assign the result of your Handlebars.compile call to a variable called "template", since
   // we are then calling "template" on line 117.
+
+  var template = $('#blog-stats').html();
+  var templateRender = Handlebars.compile(template);
 
   // REVIEW: We use `forEach` here because we are relying on the side-effects of the callback function:
   // appending to the DOM.
