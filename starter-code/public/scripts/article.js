@@ -51,8 +51,8 @@ var app = app || {};
 //   Article.all.push(new Article(ele));
 // });
 
-    Article.all = rawData.map(function(ele) {
-      return ele.Article.all;
+    Article.all = rows.map(function(ele) {
+      return new Article(ele);
     });
 
 
@@ -91,6 +91,7 @@ var app = app || {};
 
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
+      return 
       // TODO: Transform each author string into an object with properties for
       // the author's name, as well as the total number of words across all articles
       // written by the specified author.
@@ -158,4 +159,4 @@ var app = app || {};
   module.Article = Article
 
 
-})(window)
+})(app)
