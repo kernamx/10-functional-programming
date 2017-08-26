@@ -93,15 +93,15 @@ var app = app || {};
     return Article.allAuthors().map(author => {
       return ({
         authorName: author,
-        wordCount: word
+        wordCount: words
       });
 
       return ({
-        Article.all.filter(author => {
+        Article.all.filter(articles => {
           return article.author === author
         })
-        .map((article)=> article.body.split(' ').length)
-        .reduce((sum, value) => sum + value)
+        .map((allWords) => allWords.body.split(' ').length)
+        .reduce((count, words) => count + words)
       })
       // TODO: Transform each author string into an object with properties for
       // the author's name, as well as the total number of words across all articles
