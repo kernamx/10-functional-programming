@@ -1,4 +1,5 @@
 'use strict';
+
 var app = app || {};
 
 // TODO(DONE): Wrap the contents of this file, except for the preceding 'use strict' and 'var app...' declararions, in an IIFE.
@@ -140,9 +141,8 @@ var app = app || {};
     // Make sure you assign the result of your Handlebars.compile call to a variable called "template", since
     // we are then calling "template" on line 117.
 
-    var template = $('#blog-stats').html();
-    var templateRender = Handlebars.compile(template);
-
+    let template = Handlebars.compile($('#author-template').text());
+    
     // REVIEW: We use `forEach` here because we are relying on the side-effects of the callback function:
     // appending to the DOM.
     // The callback is not required to return anything.
@@ -157,4 +157,4 @@ var app = app || {};
   module.articleView = articleView
 
 
-})(app)
+})(app);
