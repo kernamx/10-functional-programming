@@ -1,4 +1,5 @@
 'use strict';
+
 var app = app || {};
 
 // REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
@@ -50,10 +51,11 @@ var app = app || {};
 //   rawData.forEach(function(ele) {
 //   Article.all.push(new Article(ele));
 // });
+    Article.all = rows.map(ele => new Article(ele));
 
-    Article.all = rows.map(function(ele) {
-      return new Article(ele);
-    });
+    // Article.all = rows.map(function(ele) {
+    //   return new Article(ele);
+    // });
 
 
   };
@@ -69,12 +71,17 @@ var app = app || {};
   };
 
   // TODO(DONE): Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
+  // Article.numWordsAll = () => {
+  //   return Article.all.map(function(allWords) {
+  //     return allWords.body;
+  //   }).reduce(function(count, words) {
+  //     return count + words.split(' ').length;
+  //   }, 0)
+  // };
+
   Article.numWordsAll = () => {
-    return Article.all.map(function(allWords) {
-      return allWords.body;
-    }).reduce(function(count, words) {
-      return count + words.split(' ').length;
-    }, 0)
+    return Article.all.map(article => article.body.match(/\b\w+/g).length)
+                      .reduce((a, b) => a + b)
   };
 
   // TODO(DONE): Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
@@ -91,28 +98,30 @@ var app = app || {};
 
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
-      // TODO: Transform each author string into an object with properties for
+      // TODO(DONE): Transform each author string into an object with properties for
       // the author's name, as well as the total number of words across all articles
       // written by the specified author.
       // HINT: This .map should be setup to return an object literal with two properties.
       // The first property should be pretty straightforward, but you will need to chain
       // some combination of filter, map, and reduce to get the value for the second
       // property.
-      // return ({
-      //   authorName: author,
-      //   wordCount: words
-      // });
-      //
-      // return ({
-      //   Article.all.filter(articles => {
-      //     return article.author === author
-      //   })
-      //   .map((allWords) => allWords.body.split(' ').length)
-      //   .reduce((count, words) => count + words)
-      // })
-
+      return {
+        name: author,
+        numWords: Article.all.filter(a => a.author === author)
+                               .map(a => a.body.match(/\b\w+/g).length)
+                               .reduce((a, b) => a + b)
+      }
     })
   };
+
+  Article.stats = () => {
+    return {
+      numArticles: Article.all.length,
+      numWords: Article.numWordsAll(),
+      Authors: Article.allAuthors(),
+    }
+  };
+
 
   Article.truncateTable = callback => {
     $.ajax({
@@ -170,4 +179,4 @@ var app = app || {};
   module.Article = Article
 
 
-})(app)
+})(app);
